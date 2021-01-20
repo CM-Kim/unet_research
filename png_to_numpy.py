@@ -13,7 +13,7 @@ file_list = os.listdir(path_T1W)
 
 for img in file_list:
     img_path = path_T1W + img
-    image = cv2.imread(img_path)
+    image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     image = cv2.resize(image, dsize=(512, 512), interpolation=cv2.INTER_CUBIC)
     t1w_images.append(image)
 
@@ -23,7 +23,7 @@ file_list = os.listdir(path_T2F)
 
 for img in file_list:
     img_path = path_T2F + img
-    image = cv2.imread(img_path)
+    image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     image = cv2.resize(image, dsize=(512, 512), interpolation=cv2.INTER_CUBIC)
     t2f_images.append(image)
 
@@ -33,7 +33,7 @@ file_list = os.listdir(path_T2W)
 
 for img in file_list:
     img_path = path_T2W + img
-    image = cv2.imread(img_path)
+    image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     image = cv2.resize(image, dsize=(512, 512), interpolation=cv2.INTER_CUBIC)
     t2w_images.append(image)
 
@@ -43,7 +43,7 @@ file_list = os.listdir(path_mask)
 
 for img in file_list:
     img_path = path_mask + img
-    image = cv2.imread(img_path)
+    image = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     image = cv2.resize(image, dsize=(512, 512), interpolation=cv2.INTER_CUBIC)
     masks.append(image)
 
