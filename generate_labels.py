@@ -6,9 +6,9 @@ import os
 
 def is_img_empty(img):
     if np.any(img >= 1):
-        return 2
+        return 2    # 질병 존재
 
-    return 1
+    return 1        # 질병 미 존재
 
 labels = []
 
