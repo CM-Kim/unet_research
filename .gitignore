@@ -9,6 +9,7 @@ MRI_T1T2T2F_ROI/*
 
 dataset/*
 
+*.h5
 
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
