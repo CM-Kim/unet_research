@@ -8,7 +8,7 @@ def is_img_empty(img):
         return False
     return True
 
-PATH = "./MRI_T1T2T2F_ROI/"
+PATH = r"dataset\Mask_brain_pic"
 file_list = os.listdir(PATH)
 
 delete_list = []
