@@ -4,24 +4,43 @@ import tensorflow as tf
 import numpy as  np
 
 def dice_loss(y_true, y_pred):
-    smooth = 1.
+    smooth=1e-6
+
     y_true_f = K.flatten(y_true)
     y_pred_f = K.flatten(y_pred)
 
-    y_true_f = tf.cast(y_true_f,tf.float32)
-    y_pred_f = tf.cast(y_pred_f,tf.float32)
+    # y_true_f = tf.cast(y_true_f,tf.float32)
+    # y_pred_f = tf.cast(y_pred_f,tf.float32)
 
     intersection = y_true_f * y_pred_f
     score = (2. * K.sum(intersection) + smooth) / (K.sum(y_true_f) + K.sum(y_pred_f) + smooth)
     return 1. - score
 
+# def dice_loss(targets, inputs):
+#     #flatten label and prediction tensors
+#       
+#       smooth=1e-6
+
+#     inputs = K.flatten(inputs)
+#     targets = K.flatten(targets)
+
+#     inputs = tf.cast(inputs,tf.float32)
+#     targets = tf.cast(targets,tf.float32)
+    
+#     intersection = K.sum(K.dot(targets, inputs))
+#     dice = (2*intersection + smooth) / (K.sum(targets) + K.sum(inputs) + smooth)
+#     return 1 - dice
+
 ### bce_dice_loss = binary_crossentropy_loss + dice_loss
 def bce_dice_loss(y_true, y_pred):
     return binary_crossentropy(y_true, y_pred) + dice_loss(y_true, y_pred)
 
+# def bce_dice_loss(y_true, y_pred):
+    # return binary_crossentropy(y_true, y_pred) + dice_loss(y_true, y_pred)
+
 def get_iou_vector(A, B):
-    t = A>0
-    p = B>0
+    t = A
+    p = B
     intersection = np.logical_and(t,p)
     union = np.logical_or(t,p)
     iou = (np.sum(intersection) + 1e-10 )/ (np.sum(union) + 1e-10)
