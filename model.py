@@ -325,3 +325,75 @@ def unet_v3(input_shape):
     unet = Model( inp, out  ,name="unet_v3")
 
     return unet;
+
+def unet_v5(input_shape, multiplier = 1):
+    inp = Input( shape=input_shape )
+
+    d1 = conv2d_block( inp, 16 * multiplier, name="contraction_1")
+    p1 = MaxPooling2D( pool_size=(2,2), strides=(2,2))(d1)
+    p1 = BatchNormalization(momentum=0.8)(p1)
+    p1 = Dropout(0.1)(p1)
+
+    d2 = conv2d_block( p1, 32 * multiplier, name="contraction_2_1" )
+    p2 = MaxPooling2D(pool_size=(2,2), strides=(2,2) )(d2)
+    p2 = BatchNormalization(momentum=0.8)(p2)
+    p2 = Dropout(0.1)(p2)
+
+    d3 = conv2d_block( p2, 64 * multiplier, name="contraction_3_1")
+    p3 = MaxPooling2D(pool_size=(2,2), strides=(2,2) )(d3)
+    p3 = BatchNormalization(momentum=0.8)(p3)
+    p3 = Dropout(0.1)(p3)
+
+    d4 = conv2d_block(p3,128 * multiplier, name="contraction_4_1")
+    p4 = MaxPooling2D(pool_size=(2,2), strides=(2,2) )(d4)
+    p4 = BatchNormalization(momentum=0.8)(p4)
+    p4 = Dropout(0.1)(p4)
+
+    d5 = conv2d_block( p4, 256 * multiplier, name="contraction_5_1")
+    p5 = MaxPooling2D( pool_size=(2,2), strides=(2,2))(d5)
+    p5 = BatchNormalization(momentum=0.8)(p5)
+    p5 = Dropout(0.1)(p5)
+
+    d6 = conv2d_block( p5, 512 * multiplier, name="contraction_6_1" )
+    p6 = MaxPooling2D(pool_size=(2,2), strides=(2,2) )(d6)
+    p6 = BatchNormalization(momentum=0.8)(p6)
+    p6 = Dropout(0.1)(p6)
+
+    d7 = conv2d_block(p6,512 * multiplier, name="contraction_7_1")
+
+    u1 = Conv2DTranspose(512 * multiplier, (3, 3), strides = (2, 2), padding = 'same')(d7)
+    u1 = concatenate([u1,d6])
+    u1 = Dropout(0.1)(u1)
+    c1 = conv2d_block(u1, 512 * multiplier, name="expansion_1")
+
+    u2 = Conv2DTranspose(256 * multiplier, (3, 3), strides = (2, 2), padding = 'same')(c1)
+    u2 = concatenate([u2,d5])
+    u2 = Dropout(0.1)(u2)
+    c2 = conv2d_block(u2,256 * multiplier, name="expansion_2")
+
+    u3 = Conv2DTranspose(128 * multiplier, (3, 3), strides = (2, 2), padding = 'same')(c2)
+    u3 = concatenate([u3,d4])
+    u3 = Dropout(0.1)(u3)
+    c3 = conv2d_block(u3, 128 * multiplier, name="expansion_3")
+
+    u4 = Conv2DTranspose(64 * multiplier, (3, 3), strides = (2, 2), padding = 'same')(c3)
+    u4 = concatenate([u4,d3])
+    u4 = Dropout(0.1)(u4)
+    c4 = conv2d_block(u4, 64 * multiplier, name="expansion_4")
+
+    u5 = Conv2DTranspose(32 * multiplier, (3, 3), strides = (2, 2), padding = 'same')(c4)
+    u5 = concatenate([u5,d2])
+    u5 = Dropout(0.1)(u5)
+    c5 = conv2d_block(u5, 32 * multiplier, name="expansion_5")
+
+    u6 = Conv2DTranspose(16 * multiplier, (3, 3), strides = (2, 2), padding = 'same')(c5)
+    u6 = concatenate([u6,d1])
+    u6 = Dropout(0.1)(u6)
+    c6 = conv2d_block(u6,16 * multiplier, name="expansion_6")
+
+    out = Conv2D(1, (1,1), name="output", activation='sigmoid')(c6)
+
+    unet = Model( inp, out  ,name="unet_v3")
+
+    return unet;
+
