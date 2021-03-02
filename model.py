@@ -393,7 +393,7 @@ def unet_v5(input_shape, multiplier = 1):
 
     out = Conv2D(1, (1,1), name="output", activation='sigmoid')(c6)
 
-    unet = Model( inp, out  ,name="unet_v3")
+    unet = Model( inp, out  ,name="unet_v5")
 
     return unet;
 
