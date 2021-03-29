@@ -53,12 +53,12 @@ class EncoderBlock(nn.Module):
         for k, op in self.module_dict.items():
             if k.startswith("conv"):
                 x = op(x)
-                print(k, x.shape)
+                # print(k, x.shape)
                 if k.endswith("1"):
                     down_sampling_features.append(x)
             elif k.startswith("max_pooling"):
                 x = op(x)
-                print(k, x.shape)
+                # print(k, x.shape)
 
         return x, down_sampling_features
 
