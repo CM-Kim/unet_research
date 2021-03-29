@@ -7,6 +7,9 @@
 MRI_T1T2T2F_ROI
 MRI_T1T2T2F_ROI/*
 
+MSLesionData
+MSLesionData/*
+
 dataset/*
 
 *.json
