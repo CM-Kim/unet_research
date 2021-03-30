@@ -112,10 +112,13 @@ class DecoderBlock(nn.Module):
             if k.startswith("deconv"):
                 x = op(x)
                 x = torch.cat((down_sampling_features[int(k[-1])], x), dim=1)
+                # print(k, x.shape)
             elif k.startswith("conv"):
                 x = op(x)
+                # print(k, x.shape)
             else:
                 x = op(x)
+                # print(k, x.shape)
         return x
 
 

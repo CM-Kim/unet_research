@@ -4,6 +4,9 @@
 
 ### CAUTION !!!!!! ###
 ### Data Directory ###
+
+unet3d/data
+
 MRI_T1T2T2F_ROI
 MRI_T1T2T2F_ROI/*
 
